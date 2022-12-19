@@ -1,17 +1,11 @@
 #!/bin/bash
-# V=0.21
-# todo
-	# help --> Write how to use when differten pings are installed
-	# differten ping versions
-	# markup how to use and how to instlal
-
+# V=0.30
 
 # BING_TYPE
 # 0 All signals
 # 1 Terminal beep
 # 2 Usage of speech-dispatcher spd-say
 # 3 Visual output
-
 BING_TYPE=0;
 
 function bing(){
@@ -42,6 +36,30 @@ function bing(){
 	fi
 }
 
+function help(){
+	echo '# Ring'
+	echo ''
+	echo '## _Ring the alarm_ '
+	echo ''
+	echo 'ring is a simple console based alarm clock. It can be run from the shell, but also from the git-bash '
+	echo 'which comes with the git installation. So it can run on nearly any system that has git installed. '
+	echo ''
+	echo '## Usage: '
+	echo ''
+	echo 'ring [minutes to alarm] [alarm type]'
+	echo 'e.g. alarm after 1 minute: '
+	echo ''
+	echo 'ring 1 '
+	echo ''
+	echo 'Since the system signal tone is different on every system different signal forms are supported for [alarm type]:'
+	echo ''
+	echo '[alarm type] = 0 : Default: All alarm types are used '
+	echo '[alarm type] = 1 : Uses terminal beep. '
+	echo '[alarm type] = 2 : 2 Usage of speech-dispatcher “spd-say”'
+	echo '[alarm type] = 3 : Visual output'
+	echo ''
+}
+
 function ring(){
 	# timer
 	for i in `seq "$1" -1 1 `; do
@@ -54,15 +72,15 @@ function ring(){
 }
 
 function main(){
-	# check input para 1 if it is a number, no input check for para 2
+	# check input para 1, if it is a number
 	if  ! echo "$1" | egrep -q '^[0-9]+$' ; then
-		echo "How to use"
+		help
 		exit 1
 	fi
 
 	# chek para 2
 	if echo "$2" | egrep -q '^[0-9]+$' ; then
-		# we get a number, so we assign it. Otherwise it is devault para
+		# we get a number, so we assign it. Otherwise it is default para
 		BING_TYPE="$2"
 	fi
 
