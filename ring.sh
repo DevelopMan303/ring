@@ -1,5 +1,5 @@
 #!/bin/bash
-# V=0.20
+# V=0.21
 # todo
 	# help --> Write how to use when differten pings are installed
 	# differten ping versions
@@ -8,7 +8,7 @@
 
 # BING_TYPE
 # 0 All signals
-# 1 Teminal beep
+# 1 Terminal beep
 # 2 Usage of speech-dispatcher spd-say
 # 3 Visual output
 
@@ -36,30 +36,37 @@ function bing(){
 		echo " | |__) |  _   _ __     __ _    | |";
 		echo " |  _  /  | | | '_ \   / _\` |   | |";
 		echo " | | \ \  | | | | | | | (_| |   |_|";
-		echo " |_|  \_\ |_| |_| |_|  \__, |   (_)";
-		echo "                        __/ |      ";
+		echo " |_|  \_\ |_| |_| |_|  \__, |    _ ";
+		echo "                        __/ |   (_)";
 		echo "                       |___/       ";
 	fi
 }
 
 function ring(){
-	# check input
-	if  echo "$1" | egrep -q '^[0-9]+$' ; then
-		#echo "ist ne zahl"
-		# counts down and inform user
-		for i in `seq "$1" -1 1 `; do
-			#echo -en "\007" ;
-			echo "Timer running." "$i" " Minutes left"
-			sleep 60;
-		done
+	# timer
+	for i in `seq "$1" -1 1 `; do
+		#echo -en "\007" ;
+		echo "Timer running." "$i" " Minutes left"
+		sleep 60;
+	done
 
-		# do the bing
-		bing $BING_TYPE
-
-	else
-		echo "How to use"
-	fi
+	bing "$2"
 }
 
-# start in background
-ring $1 &
+function main(){
+	# check input para 1 if it is a number, no input check for para 2
+	if  ! echo "$1" | egrep -q '^[0-9]+$' ; then
+		echo "How to use"
+		exit 1
+	fi
+
+	# chek para 2
+	if echo "$2" | egrep -q '^[0-9]+$' ; then
+		# we get a number, so we assign it. Otherwise it is devault para
+		BING_TYPE="$2"
+	fi
+
+	ring "$1" "$BING_TYPE" &
+}
+
+main "$1" "$2"
