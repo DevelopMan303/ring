@@ -1,5 +1,5 @@
 #!/bin/bash
-# V=0.30
+# V=0.31
 
 # BING_TYPE
 # 0 All signals
@@ -14,6 +14,7 @@ function bing(){
 	# case 1 or 0
 	if [ 1 -eq "$1" ] || [ 0 -eq "$1" ]  ; then
 		for i in `seq 5`; do
+			echo -en "\007" > /dev/tty  2>/dev/null
 			sleep 0.2;
 		done
 	fi
